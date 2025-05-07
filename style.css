@@ -1,0 +1,29 @@
+/*-- : Tarayıcıda zaten var olan özellik isimleriyle karışmaması için kullaniyoruz, cakisma yapmamasi icin*/
+
+html {
+    --zemin-rengi:     #FAFAFA;      /* Zemin rengimiz */
+    --ana-yazi-rengi:   #253C59;      /* Metin ve ikon rengi */
+    --vurgu-rengi: #D9B70D;      /* butonlar icin, bir de alt cizgi kullanirsak */
+    --ikinci-yazi-rengi:  #576574;      /* İkinci metin rengi */
+    --font-family:  'Segoe UI', sans-serif; /* Temel yazı tipi */
+  }
+  
+/* su bastaki yildizin amaci, sayfadki tüm html parcalarini kapsamasi icin */
+* {
+    margin:0; /*bosluk*/
+    padding:0; /* ic bosluk*/
+    box-sizing: border-box; /*bir kutunun icerige bagli olarak tasma vs yapmamasini saglar*/
+    
+}
+
+/* Sayfa gövdesi temel ayarlar */
+body {
+    background: var(--zemin-rengi);
+    font-family: var(--font-family);
+    color: var(--ana-yazi-rengi);
+    line-height: 1.6;  /* Metinleri okunabilir yapar */
+  }
+
+
+
+  
