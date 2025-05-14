@@ -96,6 +96,20 @@ body {
   object-fit:    cover;
 }
 
+/* Hakkımda */
+.about {
+  padding: 3rem 5%;
+}
+.about h2 {
+  font-size:     2rem;
+  margin-bottom: 1rem;
+}
+.about p {
+  color:         var(--muted);
+  line-height:   1.6;
+}
+
+
 
 
 
