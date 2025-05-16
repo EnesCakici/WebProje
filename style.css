@@ -109,7 +109,7 @@ body {
   line-height:   1.6;
 }
 
-/* 7) Projeler */
+/* Projeler */
 .projects {
   padding: 3rem 5%;
 }
@@ -164,6 +164,65 @@ body {
   border-radius: 5px;
   object-fit:    contain;
   height:        400px; /* yükseklik */
+}
+
+/* CV Header */
+.cv-header {
+  text-align: center;
+  padding: 3rem 5%;
+}
+.cv-header h1 {
+  font-size: 2.5rem;
+  color: var(--ana-yazi-rengi);
+  margin-bottom: 0.5rem;
+}
+.cv-header p {
+  margin: 0.25rem 0;
+  color: var(--ikinci-yazi-rengi);
+}
+.cv-header p a {
+  color: var(--vurgu-rengi);
+  text-decoration: none;
+}
+
+/* Eğitim & Deneyim & Diğer Bölümler */
+.education,
+.experience,
+.skills,
+.certificates,
+.languages,
+.competence {
+  padding: 3rem 5%;
+}
+.education h2,
+.experience h2,
+.skills h2,
+.certificates h2,
+.languages h2,
+.competence h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--ana-yazi-rengi);
+}
+.education article,
+.experience article {
+  margin-bottom: 1rem;
+}
+.skills ul,
+.certificates ul,
+.languages ul,
+.competence ul {
+  list-style: disc inside;
+  color: var(--ana-yazi-rengi);
+  margin-left: 1rem;
+}
+
+/* CV Footer */
+.cv-footer {
+  text-align: center;
+  padding: 2rem 5%;
+  border-top: 1px solid #e0e0e0;
+  color: var(--ana-yazi-rengi);
 }
 
 
