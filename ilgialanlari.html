@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Enes Çakıcı – İlgi Alanlarım</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/a2e0fdc8b5.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <nav>
+      <ul>
+        <li><a href="index.html">Hakkımda</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="projeler.html">Projeler</a></li>
+        <li><a href="sehrim.html">Şehrim</a></li>
+        <li><a href="mirasimiz.html">Mirasımız</a></li>
+        <li><a href="ilgi.html" class="active">İlgi Alanlarım</a></li>
+        <li><a href="iletisim.html">İletişim</a></li>
+      </ul>
+    </nav>
+    <div class="social">
+      <a href="https://www.linkedin.com/in/enes-%C3%A7ak%C4%B1c%C4%B1/" target="_blank" title="LinkedIn">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://github.com/EnesCakici" target="_blank" title="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Giriş -->
+    <section class="music-intro">
+      <h2>İlgi Alanlarım: Müzik</h2>
+      <p>
+        Müzik dinlemek benim en büyük tutkularımdan biri.  
+        Şarkıların sözleri ve ritimleriyle kendimi ifade ediyor,  
+        yeni keşifler yapmaktan büyük keyif alıyorum.  
+        Aşağıda Last.fm API'si ile en popüler <strong>şarkılarımı</strong>  
+        ve favori <strong>sanatçılarımı</strong> listeliyoruz; her birinde parça/sanatçı adı,  
+        albüm kapağı ve dinlenme sayısını görebilirsin.
+      </p>
+    </section>
+
+    <!-- En Popüler Şarkılar -->
+    <section class="top-tracks">
+      <h3>En Popüler Şarkılarım</h3>
+      <ul id="trackList" class="track-list"></ul>
+    </section>
+
+    <!-- Favori Sanatçılar -->
+    <section class="top-artists">
+      <h3>Favori Sanatçılarım</h3>
+      <ul id="artistList" class="artist-list"></ul>
+    </section>
+  </main>
+
+  <script>
+    const API_KEY = '72d0827a70c33e2dbd594c61c02bb743';     
+    const USER    = 'enescakici';  
+
+    // En popüler 6 şarkı
+    fetch(`https://ws.audioscrobbler.com/2.0/?method=user.gettoptracks&user=${USER}&api_key=${API_KEY}&format=json&limit=6`)
+      .then(res => res.json())
+      .then(data => {
+        const ul = document.getElementById('trackList');
+        data.toptracks.track.forEach(t => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <figure>
+              <img src="${t.image[2]['#text']}" alt="${t.name}">
+              <figcaption>
+                <strong>${t.name}</strong><br>
+                ${t.artist.name}<br>
+                <span class="playcount">Playcount: ${t.playcount}</span>
+              </figcaption>
+            </figure>
+          `;
+          ul.appendChild(li);
+        });
+      })
+      .catch(err => console.error('Şarkılar yüklenirken hata oluştu:', err));
+
+    // En çok dinlenen 5 sanatçı
+    fetch(`https://ws.audioscrobbler.com/2.0/?method=user.gettopartists&user=${USER}&api_key=${API_KEY}&format=json&limit=5`)
+      .then(res => res.json())
+      .then(data => {
+        const ul = document.getElementById('artistList');
+        data.topartists.artist.forEach(a => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <figure>
+              <img src="${a.image[2]['#text']}" alt="${a.name}">
+              <figcaption>
+                <strong>${a.name}</strong><br>
+                Listeners: ${a.listeners}
+              </figcaption>
+            </figure>
+          `;
+          ul.appendChild(li);
+        });
+      })
+      .catch(err => console.error('Sanatçılar yüklenirken hata oluştu:', err));
+  </script>
+
+</body>
+</html>
