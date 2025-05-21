@@ -293,6 +293,76 @@ body {
   .track-list img, .artist-list img { height:120px; }
 }
 
+/*sehrim*/
+
+.city {
+  padding:       3rem 5%;
+  background:    var(--bg);
+}
+.city h2 {
+  font-size:     2.25rem;
+  margin-bottom: 1.5rem;
+  text-align:    center;
+  color:         var(--text);
+}
+
+/* Slider */
+.slider {
+  display:            flex;
+  gap:                1rem;
+  overflow-x:         auto;
+  scroll-snap-type:   x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom:     1rem;
+  margin-bottom:      2rem;
+}
+.slider a {
+  flex:               0 0 auto;        /* Genişlik içeriğe göre */
+  scroll-snap-align:  center;
+}
+.slider img {
+  width:              280px;            /* Sabit genişlik */
+  height:             160px;            /* Orana uygun yükseklik */
+  object-fit:         cover;
+  border-radius:      8px;
+  transition:         transform .3s ease;
+  cursor:             pointer;
+}
+.slider img:hover {
+  transform:          scale(1.03);
+}
+
+/* Detay Bölümleri */
+.city-detail {
+  padding:       2rem 5%;
+  border-top:    1px solid #e0e0e0;
+  scroll-margin: 5rem;                  /* Ankora tıkladığında üstü kaybolmasın */
+}
+.city-detail:first-of-type {
+  border-top: none;
+}
+.city-detail h3 {
+  font-size:     1.8rem;
+  margin-bottom: .5rem;
+  color:         var(--text);
+}
+.city-detail p {
+  color:         var(--muted);
+  line-height:   1.6;
+  margin-bottom: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .slider img {
+    width:  200px;
+    height: 120px;
+  }
+  .city-detail {
+    padding: 1.5rem 3%;
+  }
+}
+
 
 
 
