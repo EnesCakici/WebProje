@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Giriş – Enes Çakıcı</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <!--Vue.js’i, URL’den kütüphaneyi direk internetten çekiyoruz
+    ve sayfada kullıyoruz-->
+</head>
+<body>
+  <div id="app" class="login-container">
+     <!-- Form: Veriyi login.php'ye POST ile gönderecek 
+        method="POST" → Kullanıcı adı ve şifreyi gizli gönderiyor-->
+    <form id="loginForm" action="login.php" method="POST" @submit.prevent="submitIfValid">
+      <h2>Giriş Yap</h2>
+
+      <!--Kullaniciadi-->
+      <div class="form-group">
+        <label for="username">Kullanıcı Adı (e-posta):</label>
+        <input type="text" id="username" name="username" v-model="username" placeholder="örnek@domain.com" />
+      </div>
+      <!--Sifre-->
+      <div class="form-group">
+        <label for="password">Şifre:</label>
+        <input type="password" id="password" name="password" v-model="password" placeholder="Şifrenizi girin" />
+      </div>
+
+    <!-- 4) Hata Mesajları Listesi -->
+    <!-- errors dizisi doluysa burayı göster -->
+      <ul v-if="errors.length" class="errors">
+        <li v-for="err in errors">{{ err }}</li>
+      </ul>
+
+      <button type="submit" class="btn">Giriş Yap</button>
+    </form>
+  </div>
+
+
+    <!--formu kontrol eden kisim-->
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        username: '',
+        password: '',
+        errors: []
+      },
+      mounted() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('error') === '1') {
+          this.errors.push('Kullanıcı adı veya şifre hatalı!');
+        }
+      },
+      methods: {
+        validate() {
+          this.errors = [];
+          if (!this.username) {
+            this.errors.push('Kullanıcı adı boş olamaz.');
+          } else if (!/.+@.+\..+/.test(this.username)) {
+            this.errors.push('Geçerli bir e-posta adresi giriniz.');
+          }
+          if (!this.password) {
+            this.errors.push('Şifre boş olamaz.');
+          }
+        },
+        submitIfValid() {
+          this.validate();
+          if (this.errors.length === 0) {
+            document.getElementById('loginForm').submit();
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
