@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>İletişim – Enes Çakıcı</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+
+  <!-- NAVBAR (mevcut navbar kodunuzu buraya ekleyin) -->
+  <header class="navbar">
+    <nav>
+      <ul>
+        <li><a href="index.html" class="active">Hakkımda</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="projeler.html">Projeler</a></li>
+        <li><a href="sehrim.html">Şehrim</a></li>
+        <li><a href="ilgialanlari.html">İlgi Alanlarım</a></li>
+        <li><a href="iletisim.html">İletişim</a></li>
+        <li><a href="login.html">Giriş</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="contact-container" id="contactApp">
+      <h2>İletişim Formu</h2>
+
+      <form id="contactForm"
+            action="https://formsubmit.co/enescakici65@gmail.com"
+            method="POST">
+
+        <!-- Ad – Soyad -->
+        <div class="form-group">
+          <label for="fullName">Ad – Soyad</label>
+          <input type="text" id="fullName" name="fullName" placeholder="İsim Soyisim" />
+        </div>
+
+        <!-- E-posta -->
+        <div class="form-group">
+          <label for="email">E-posta</label>
+          <input type="email" id="email" name="email" placeholder="ornek@domain.com" />
+        </div>
+
+        <!-- Telefon -->
+        <div class="form-group">
+          <label for="phone">Telefon</label>
+          <input type="tel" id="phone" name="phone" placeholder="5XX XXX XXXX" />
+        </div>
+
+        <!-- Doğum Tarihi -->
+        <div class="form-group">
+          <label for="birthdate">Doğum Tarihi</label>
+          <input type="date" id="birthdate" name="birthdate" />
+        </div>
+
+        <!-- İlgi Alanları -->
+        <fieldset class="form-group">
+          <legend>İlgi Alan Seçimi</legend>
+          <label><input type="checkbox" name="interests[]" value="Web Geliştirme"> Web Geliştirme</label>
+          <label><input type="checkbox" name="interests[]" value="Mobil Uygulama"> Mobil Uygulama</label>
+          <label><input type="checkbox" name="interests[]" value="Veri Analizi"> Veri Analizi</label>
+          <label><input type="checkbox" name="interests[]" value="Siber Güvenlik"> Siber Güvenlik</label>
+        </fieldset>
+
+        <!-- Konu -->
+        <div class="form-group">
+          <label for="subject">Konu</label>
+          <select id="subject" name="subject">
+            <option value="">Seçiniz</option>
+            <option value="Genel">Genel</option>
+            <option value="Proje">Proje Hakkında</option>
+            <option value="Geri Bildirim">Geri Bildirim</option>
+          </select>
+        </div>
+
+        <!-- Cinsiyet -->
+        <fieldset class="form-group">
+          <legend>Cinsiyet</legend>
+          <label><input type="radio" name="gender" value="Erkek"> Erkek</label>
+          <label><input type="radio" name="gender" value="Kadın"> Kadın</label>
+          <label><input type="radio" name="gender" value="Belirtmek İstemiyorum"> Belirtmek İstemiyorum</label>
+        </fieldset>
+
+        <!-- Mesaj -->
+        <div class="form-group">
+          <label for="message">Mesajınız</label>
+          <textarea id="message" name="message" rows="5" placeholder="Mesajınızı buraya yazın"></textarea>
+        </div>
+
+        <!-- Gizli alanlar (Formsubmit.co) -->
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_subject" value="Yeni İletişim Formu Mesajı">
+
+        <!-- Hata listeleri -->
+        <ul id="jsErrors" class="errors"></ul>
+        <ul v-if="errors.length" class="errors">
+          <li v-for="err in errors">{{ err }}</li>
+        </ul>
+
+        <!-- Butonlar -->
+        <div class="buttons">
+          <button type="button" onclick="jsValidate()">JS Denetle</button>
+          <button type="button" @click="vueValidate">Vue Denetle</button>
+          <button type="reset">Temizle</button>
+          <button type="submit" @click.prevent="submitIfValid">Gönder</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    // Saf JS validasyonu
+    function jsValidate() {
+      const errs = [];
+      const fullName  = document.getElementById('fullName').value.trim();
+      const email     = document.getElementById('email').value.trim();
+      const phone     = document.getElementById('phone').value.trim().replace(/\s+/g,'');
+      const birthdate = document.getElementById('birthdate').value;
+      const subject   = document.getElementById('subject').value;
+      const message   = document.getElementById('message').value.trim();
+
+      if (!fullName) errs.push('Ad – Soyad boş olamaz.');
+      if (!/.+@.+\..+/.test(email)) errs.push('Geçerli bir e-posta girin.');
+      if (!/^\d{10,}$/.test(phone)) errs.push('Telefon yalnızca rakam içermeli.');
+      if (!birthdate) errs.push('Doğum tarihi seçin.');
+      if (!subject) errs.push('Lütfen bir konu seçin.');
+      if (!message) errs.push('Mesaj boş olamaz.');
+
+      const ul = document.getElementById('jsErrors');
+      ul.innerHTML = '';
+      errs.forEach(e=> {
+        const li = document.createElement('li');
+        li.textContent = e;
+        ul.appendChild(li);
+      });
+    }
+
+    // Vue.js validasyonu
+    new Vue({
+      el: '#contactApp',
+      data: { errors: [] },
+      methods: {
+        vueValidate() {
+          this.errors = [];
+          jsValidate();               // aynı kontrolleri kullanabiliriz
+          const jsErrCount = document.getElementById('jsErrors').children.length;
+          if (jsErrCount > 0) this.errors.push('JS hatalarını düzeltin.');
+        },
+        submitIfValid() {
+          this.vueValidate();
+          if (this.errors.length === 0) {
+            document.getElementById('contactForm').submit();
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
